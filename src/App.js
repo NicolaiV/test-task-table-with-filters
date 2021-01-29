@@ -7,8 +7,10 @@ import EmployeeTable from './components/EmployeeTable';
 function App() {
   return (
     <div>
-      <header>test-task-table-with-filters</header>
-      <GeneralSummary />
+      <header>
+        <h1>Employee table</h1>
+      </header>
+      {/*<GeneralSummary />*/}
       <Filters />
       <EmployeeTable />
     </div>
