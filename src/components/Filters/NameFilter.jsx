@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { setName } from '../../actions/filter';
 
 const NameFilter = ({ nameFilter, setNameFilter }) => {
-  console.log({ nameFilter });
   return (
     <input
       value={nameFilter}

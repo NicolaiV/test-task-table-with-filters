@@ -2,7 +2,7 @@ import {
   setEndDate,
   setName,
   setStartDate,
-  setActive,
+  swapActiveFilter,
 } from '../actions/filter';
 import { handleActions } from 'redux-actions';
 
@@ -24,9 +24,9 @@ const filter = handleActions(
       ...state,
       endDate,
     }),
-    [setActive]: (state, { payload: active }) => ({
+    [swapActiveFilter]: (state) => ({
       ...state,
-      active,
+      active: !state.active,
     }),
   },
   defaultState

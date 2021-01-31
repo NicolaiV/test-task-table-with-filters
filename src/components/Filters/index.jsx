@@ -13,7 +13,7 @@ const Filters = () => {
     <FilterBlock>
       <p>Filter:</p>
       <NameFilter />
-      {/*<DatesFilter />*/}
+      <DatesFilter />
     </FilterBlock>
   );
 };

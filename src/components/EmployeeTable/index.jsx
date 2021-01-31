@@ -1,13 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useCallback } from 'react';
 import { connect } from 'react-redux';
-import { fetchEmployee, setActive } from '../../actions/employee';
+import { fetchEmployee } from '../../actions/employee';
 import moment from 'moment';
-
-const timeLabel = (value) => {
-  const tempTime = moment.duration(value);
-  return `${tempTime.hours()}:${tempTime.minutes()}:${tempTime.seconds()}`;
-};
+import TimeItem from './TimeItem';
+import ToggleButton from './ToggleButton';
 
 const Item = ({ item }) => {
   const times = item?.times || [];
@@ -31,45 +28,50 @@ const Item = ({ item }) => {
     return value;
   }, [times]);
   const productive = clockedIn - unproductive;
-  const ratio = productive / unproductive;
+  const ratio = (productive / unproductive).toFixed(2);
 
   return (
     <tr>
       <td>{item.name}</td>
-      <td>{timeLabel(clockedIn)}</td>
-      <td>{timeLabel(productive)}</td>
-      <td>{timeLabel(unproductive)}</td>
+      <td>
+        <TimeItem value={clockedIn} />
+      </td>
+      <td>
+        <TimeItem value={productive} />
+      </td>
+      <td>
+        <TimeItem value={unproductive} />
+      </td>
       <td>{ratio}</td>
-      {/*} <td>23</td>*/}
+      <td>
+        <ToggleButton id={item?.id} active={item?.active} />
+      </td>
     </tr>
   );
 };
 
-const EmployeeTable = ({
-  items = [],
-  setActive,
-  fetchEmployee,
-  filter,
-}) => {
+const EmployeeTable = ({ items = [], fetchEmployee, filter }) => {
   useEffect(() => {
     fetchEmployee(filter);
   }, [fetchEmployee, filter]);
 
   const renderItem = useCallback((item) => {
-    return <Item item={item} />;
+    return <Item item={item} key={String(item.id)} />;
   }, []);
   return (
-    <table class="table" border="1">
+    <table className="table" border="1">
       <caption>Employee table</caption>
-      <tr>
-        <th>Name</th>
-        <th>Total Clocked-in time</th>
-        <th>Total Productive time</th>
-        <th>Total Unproductive time</th>
-        <th>Productivity ratio </th>
-        {/*  <th>Activate/Deactivate button </th>*/}
-      </tr>
-      {items.map(renderItem)}
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Total Clocked-in time</th>
+          <th>Total Productive time</th>
+          <th>Total Unproductive time</th>
+          <th>Productivity ratio </th>
+          <th>Activate/Deactivate button </th>
+        </tr>
+      </thead>
+      <tbody>{items.map(renderItem)}</tbody>
     </table>
   );
 };
@@ -80,7 +82,6 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = {
-  setActive,
   fetchEmployee,
 };
 

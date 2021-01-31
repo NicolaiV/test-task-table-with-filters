@@ -10,7 +10,7 @@ function App() {
       <header>
         <h1>Employee table</h1>
       </header>
-      {/*<GeneralSummary />*/}
+      <GeneralSummary />
       <Filters />
       <EmployeeTable />
     </div>
