@@ -1,17 +1,10 @@
 import { connect } from 'react-redux';
 import { swapActiveFilter } from '../../actions/filter';
 import styled from 'styled-components';
-import { useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { fetchMeta } from '../../actions/employee';
+import { fetchMeta } from '../../api';
 import TimeItem from '../EmployeeTable/TimeItem';
-
-const GeneralSummaryList = styled.div`
-  display: flex,
-  flex-direction: column,
-  padding-left: 16px,
-`;
 
 const GeneralSummary = ({ swapActiveFilter, activeFiler }) => {
   const [totalEmployeesNumer, setTotalEmployeesNumer] = useState();
@@ -36,7 +29,7 @@ const GeneralSummary = ({ swapActiveFilter, activeFiler }) => {
   ]);
 
   return (
-    <GeneralSummaryList>
+    <div>
       <button onClick={swapActiveFilter}>
         {activeFiler ? 'Active employees' : 'Inactive employees'}
       </button>
@@ -51,7 +44,7 @@ const GeneralSummary = ({ swapActiveFilter, activeFiler }) => {
         Total Unproductive time:{' '}
         <TimeItem value={totalUnproductive} />
       </p>
-    </GeneralSummaryList>
+    </div>
   );
 };
 
